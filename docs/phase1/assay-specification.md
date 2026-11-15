@@ -2,77 +2,91 @@
 
 **Document:** Phase 1 Assay Specification  
 **Behavior Scope:** MVP Vertical Slice — Taste contact to proboscis extension response (PER)  
-**Status:** Working specification; candidate for Phase 1 signoff  
+**Target Release:** FlyWire FAFB v783  
+**Review Date:** 2026-11-14  
+**Status:** Owner-approved for planning; specific FAFB v783 circuit remains unverified until Phase 3
 
 ---
 
-## 1. Testable Research Question & Hypothesis
+## 1. Testable Research Question & Sensorimotor Hypothesis
 
-### 1.1 Core Question
-> **Can physical contact with a sucrose stimulus recruit a connectome-derived subesophageal circuit to drive firing in candidate proboscis motor neurons (such as MN9) and produce visible proboscis extension, and does virtual silencing of candidate intermediate nodes significantly attenuate this response?**
+### 1.1 Core Research Question
+> **Can physical contact with a sucrose stimulus recruit a candidate SEZ circuit, after its FAFB v783 cell identities and connectivity are verified in Phase 3, to drive candidate proboscis motor-neuron firing and a modeled proboscis response, and does virtual silencing of selected intermediate nodes attenuate that response?**
 
 ### 1.2 Falsifiable Sensorimotor Hypothesis
-1. **Primary Sensorimotor Premise:** Physical contact between the fly's gustatory contact proxy (labellar or tarsal sensilla) and a sucrose patch activates modeled sugar-sensing gustatory receptor neurons (GRNs). Synaptic excitation propagating through the connected subesophageal zone (SEZ) circuit drives the firing of proboscis motor neuron MN9 above its baseline threshold.
-2. **Causal Intervention Premise:** Virtually silencing identified intermediate interneurons (or the sensory population) in the intact network during sucrose contact will eliminate or significantly delay MN9 motor neuron activation and resulting proboscis extension relative to a seed-matched intact baseline.
-3. **Falsification Criteria (What Disconfirms the Hypothesis):**
-   * *False Positive / Causality Failure:* Proboscis extension occurs in the absence of valid physical contact (violates contact-dependence).
-   * *Sensory Insensitivity:* The motor neuron MN9 fires identically when exposed to non-sugar (e.g., pure water or bitter) stimuli or under a sensory-blind control.
-   * *Circuit Disconnection:* Simulation of the extracted connectome subgraph fails to propagate excitation from sugar GRNs to MN9 (resulting in complete motor quiescence under physiological weights).
-   * *Perturbation Failure:* Virtual silencing of key bottleneck intermediate nodes produces no significant change in MN9 spike timing or probability compared to the intact circuit.
+1. **Sensorimotor Transformation Hypothesis:** Physical contact between the fly's labellar contact proxy and a sucrose patch generates simulated sensory drive in candidate sugar gustatory receptor neurons (GRNs). Synaptic excitation propagating through downstream SEZ interneurons drives action potential firing in proboscis motor neuron **MN9** above a baseline threshold.
+2. **Causal Perturbation Hypothesis:** Virtually silencing candidate intermediate premotor interneurons (`Fdg` / SEZ premotor group) during sucrose contact will eliminate or significantly attenuate MN9 motor recruitment and resulting proboscis extension relative to an identical seed-matched intact trial.
+3. **Falsification Criteria (Observations That Disconfirm the Model):**
+   * *Contact Independence (False Positive):* Proboscis extension occurs in the absence of valid physical contact.
+   * *Sensory Blindness:* MN9 fires identically when exposed to non-sugar (water, bitter) stimuli or under a sensory-blind control where input current is zeroed.
+   * *Circuit Disconnection:* Simulation of the extracted FAFB v783 subgraph fails to propagate excitation from sugar GRNs to MN9 under biophysically plausible synaptic weights.
+   * *Intervention Failure:* Virtual silencing of the intermediate premotor node produces no statistically significant difference in MN9 spike timing, spike count, or proboscis extension compared to the intact circuit.
+
+These statements are predeclared hypotheses, not findings. Phase 1 has not verified the named sensory-to-output path or its individual edges in FAFB v783.
 
 ---
 
-## 2. Evidence Categorization of the Sensorimotor Loop
+## 2. Rigorous Categorization of Assay Elements
 
-| Stage | Process | Classification | Biological / Modeling Basis |
+In accordance with the NeuroFly evidence vocabulary, every element of the sensorimotor loop is classified below:
+
+| Stage | Process / Element | Evidence Classification | Biological & Engineering Status |
 |---|---|:---:|---|
-| **1. World** | Patch placement, sugar concentration (100 mM sucrose equivalent) | **Modeled** | Standard sucrose concentration used in Drosophila feeding assays (Shiu et al. 2024; Dethier 1976). |
-| **2. Contact** | Labellar/tarsal contact proxy intersects patch collision geometry | **Modeled** | Rigid-body sphere-plane collision detection; generates timestamped `ContactEvent`. |
-| **3. Sensory Encoding** | `ContactEvent` triggers spike generator in candidate sugar GRNs | **Modeled** | Poisson spike train or step current injection (50–100 Hz equivalent) into identified sugar GRNs. |
-| **4. Circuit Wiring** | Synaptic connections between sugar GRNs, SEZ interneurons, and MN9 | **Measured** | Directed synapse counts and topologies from FlyWire FAFB v783 / v630. |
-| **5. Neurotransmitters** | Synaptic signs (excitatory vs. inhibitory) | **Inferred** | Machine-learning predicted transmitters (acetylcholine = +, GABA/glutamate = -) from FlyWire annotations. |
-| **6. Neural Dynamics** | Membrane potentials, spike thresholds, synaptic currents | **Modeled** | Leaky Integrate-and-Fire (LIF) biophysics with parameters adapted from Shiu et al. (2024). |
-| **7. Motor Output** | MN9 spike trains / action potentials | **Predicted** | Model output predicting muscle 9 recruitment. |
-| **8. Motor Decoding** | MN9 spike count / frequency converted to rostrum protractor angle | **Modeled** | Leaky integrator / sigmoid actuator mapping: extension angle $\theta(t)$, hold duration, and passive retraction. |
-| **9. Visible Action** | Proboscis extension, hold, and retraction | **Modeled / Display** | 3D articulated rig joint rotation driven solely by decoded motor state. |
+| **1. World** | Patch location, sucrose concentration ($100\text{ mM}$ equivalent) | **Modeled** | Standard concentration used in *Drosophila* behavioral feeding assays (Shiu et al. 2024; Dethier 1976). Concentration-response relationship is a provisional model choice. |
+| **2. Contact Event** | Spatial intersection between labellar contact proxy and stimulus patch | **Modeled** | Two operational modes: (A) Scripted deterministic contact fixture for regression testing; (B) Dynamic collision detection in the 3D Habitat. |
+| **3. Sensory Encoding** | Translation of contact event into GRN electrical excitation | **Modeled** | Provisional uncalibrated model choice: Poisson spike train ($50\text{--}80\text{ Hz}$) or constant depolarizing current injection ($15\text{ pA}$) into candidate sugar GRNs. |
+| **4. Circuit Connectivity** | Candidate chemical connections among sugar GRNs, SEZ interneurons, and MN9 | **Proposed / unverified for FAFB v783** | Exact root IDs and pair-specific edges must be queried in Phase 3; do not present the candidate path as measured in v783. |
+| **5. Neurotransmitters** | Synaptic signs (excitatory vs. inhibitory) | **Inferred** | Automated per-synapse predictions (Eckstein et al. 2020; Schlegel et al. 2024). Acetylcholine = $+1$; GABA/Glutamate = $-1$. |
+| **6. Neural Dynamics** | Membrane potentials, thresholds, synaptic decay | **Modeled** | Leaky Integrate-and-Fire (LIF) dynamics adopting Shiu et al. constants ($v_0 = -52\text{ mV}$, $v_{\text{th}} = -45\text{ mV}$, $t_{\text{ref}} = 2.2\text{ ms}$, $\tau_{\text{syn}} = 5\text{ ms}$). |
+| **7. Motor Output** | Action potential trains emitted by motor neuron MN9 | **Predicted** | Model prediction of motor recruitment. |
+| **8. Motor Decoding** | Translation of MN9 spikes into joint kinematic command | **Modeled** | Provisional uncalibrated engineering choice: First-order leaky accumulator with muscle time constant $\tau_m = 50\text{ ms}$ driving joint angle $\theta(t)$. |
+| **9. Visible Action** | Proboscis rostrum extension, hold, and retraction | **Modeled / Display** | 3D articulated rig joint rotation ($\theta \in [0^\circ, 45^\circ]$). Displayed action is strictly driven by the motor decoder output. |
 
 ---
 
-## 3. Standardized Trial Protocol
+## 3. Standardized Trial Protocol & Contact Definitions
 
-### 3.1 Initial Conditions & Starting State
-* **Body State:** Adult fly positioned in a stationary stance on a flat, neutral arena floor ($z = 0$).
-* **Proboscis State:** Fully retracted resting pose ($\theta_0 = 0^\circ$).
-* **Neural State:** All membrane potentials initialized to resting potential ($V_{\text{rest}} = -55\text{ mV}$), zero synaptic conductances, zero refractory timers.
-* **Internal State:** Satiation/hunger multiplier is fixed to a standardized baseline (equivalent to starved/motivated feeding state in Shiu et al. 2024); internal state modulation is held constant for the MVP.
+### 3.1 Distinction: Scripted Fixtures vs. Habitat Contact Events
+To prevent conflating unit-test harnesses with interactive physics, NeuroFly formally defines two contact mechanisms:
+* **Scripted Contact Fixture (Benchmarking Mode):** An artificial, deterministic timeline where contact is asserted at exactly $t = 100\text{ ms}$ and held for $250\text{ ms}$ while the fly body is stationary. Used exclusively for automated regression testing, CI validation, and parameter sanity checks.
+* **Habitat-Generated Contact Event (Interactive Mode):** A dynamic event emitted by the 3D Habitat spatial engine when the fly's body/labellar collider geometry intersects the stimulus patch boundary in real time.
 
-### 3.2 Stimulus & Contact Geometry
-* **Stimulus Patch:** Circular surface patch (radius $r = 1.0\text{ mm}$), positioned immediately adjacent to the fly's anterior reach.
-* **Contact Boundary:** A localized sphere proxy (radius $0.15\text{ mm}$) at the distal tip of the proboscis/labellum.
-* **Valid Contact Definition:** An intersection between the contact proxy and the stimulus patch boundary. Contact onset is recorded as $t_{\text{contact}}$ ($t = 100\text{ ms}$ into a standard trial). Contact offset occurs when the fly body or proboscis moves out of range.
-
-### 3.3 Trial Timing & Replay Rules
-* **Trial Duration:** Standardized $500\text{ ms}$ simulation window (5,000 steps at $dt = 0.1\text{ ms}$).
-  * $0\text{ ms} \le t < 100\text{ ms}$: Baseline baseline settling / silence window (verifies no spontaneous firing).
-  * $100\text{ ms} \le t < 350\text{ ms}$: Stimulus contact window ($250\text{ ms}$ taste exposure).
-  * $350\text{ ms} \le t \le 500\text{ ms}$: Post-contact recovery and retraction window.
-* **Deterministic Seeds:** Every trial records an integer random seed controlling Poisson sensory spike generation. Seed-matched paired trials guarantee that differences between baseline and intervention runs stem strictly from circuit modifications.
+### 3.2 Standardized Baseline Trial Settings
+* **Initial Body Pose:** Adult fly stationary on a flat arena floor ($z = 0$).
+* **Proboscis State:** Fully retracted resting pose ($\theta_0 = 0.0^\circ$).
+* **Neural State Initialization:** All membrane voltages set to resting potential ($V_i(0) = -52.0\text{ mV}$), zero active synaptic conductances, zero refractory timers.
+* **Contact Geometry:** Distal labellar sphere proxy (radius $r_{\text{contact}} = 0.15\text{ mm}$); circular sucrose patch (radius $r_{\text{patch}} = 1.0\text{ mm}$).
+* **Trial Timeline ($500\text{ ms}$ total window; $dt = 0.1\text{ ms}$):**
+  * $0\text{ ms} \le t < 100\text{ ms}$: Baseline settling window (verifies no spontaneous resting spikes).
+  * $100\text{ ms} \le t < 350\text{ ms}$: Contact stimulus window ($250\text{ ms}$ taste exposure).
+  * $350\text{ ms} \le t \le 500\text{ ms}$: Post-contact recovery and mechanical retraction window.
+* **Accounting for Trial Variability:** Repeated trials vary the integer random seed governing Poisson sensory spike arrival times. Evaluations report mean, standard deviation, and 95% confidence intervals across $N \ge 30$ seeded runs.
 
 ---
 
-## 4. Input and Output Mapping Hypotheses
+## 4. Input and Output Mapping Specifications
 
-### 4.1 Stimulus-to-Sensory Mapping
-When valid contact is established with a sucrose patch, a constant current or equivalent Poisson input is delivered exclusively to the pre-identified candidate sugar GRNs:
+### 4.1 Stimulus-to-Sensory Mapping (Provisional Model Choice)
+When valid contact is established with a sucrose patch, simulated sensory drive is injected into the identified candidate sugar GRNs:
 $$I_{\text{inj}, i}(t) = \begin{cases} I_0 \cdot \frac{C}{C + K_d} & \text{if } t_{\text{contact}} \le t < t_{\text{release}} \text{ and } i \in \mathcal{S}_{\text{sugar}} \\ 0 & \text{otherwise} \end{cases}$$
-where $I_0 = 15\text{ pA}$, $C = 100\text{ mM}$ sucrose, and $K_d = 20\text{ mM}$ is the half-maximal saturation constant. For bitter stimuli, $I_{\text{inj}} = 0$ for $\mathcal{S}_{\text{sugar}}$, routing instead to bitter GRNs.
+* **Provisional Parameter Values:** $I_0 = 15.0\text{ pA}$ (provisional depolarizing current), $C = 100.0\text{ mM}$ (sucrose concentration), $K_d = 20.0\text{ mM}$ (half-saturation constant). Alternatively, a Poisson spike train with rate $\lambda = 60\text{ Hz} \cdot \frac{C}{C + K_d}$ will be injected.
+* **Status:** These values are provisional engineering choices that will be calibrated during Phase 5.
 
-### 4.2 Motor-Output-to-Proboscis Actuation
-Proboscis extension angle $\theta(t)$ is controlled by the firing rate of proboscis motor neuron MN9, decoded via a first-order leaky accumulator:
+### 4.2 Motor-Output-to-Proboscis Actuation (Provisional Model Choice)
+Proboscis extension angle $\theta(t)$ is driven by MN9 spike accumulation:
 $$\tau_m \frac{d A(t)}{dt} = -A(t) + \sum_{k} \delta(t - t_{\text{MN9}, k})$$
 $$\theta(t) = \theta_{\text{max}} \cdot \frac{A(t)^n}{A_{50}^n + A(t)^n}$$
-where $\theta_{\text{max}} = 45^\circ$, $\tau_m = 50\text{ ms}$ (muscle activation time constant), Hill coefficient $n = 2$, and $A_{50}$ represents the half-maximal spike count threshold. When $A(t) < A_{\text{threshold}}$, $\theta(t) \to 0$ (passive mechanical return to resting pose).
+* **Provisional Parameter Values:** Maximum extension angle $\theta_{\text{max}} = 45.0^\circ$, muscle activation time constant $\tau_m = 50.0\text{ ms}$, Hill coefficient $n = 2$, half-maximal activation $A_{50} = 3\text{ spikes}$.
+* **Response Threshold:** A positive extension response is defined as $\theta(t) \ge 20.0^\circ$.
+* **Status:** The threshold ($\theta \ge 20^\circ$) and Hill function parameters are uncalibrated modeling assumptions. If biomechanical calibration in Phase 5 indicates a different muscle time constant, these parameters will be updated without modifying connectome provenance.
 
 ### 4.3 Null and Negative Outcome Representation
-If the circuit does not reach the motor firing threshold $A_{\text{threshold}}$, $\theta(t)$ remains $0^\circ$. The simulation marks the trial as `OUTCOME_NO_RESPONSE`. This is rendered as a stationary, retracted proboscis and logged as a valid experimental observation, rather than defaulting to an animation or error state.
+If the operational positive-response rule is not met (MN9 fires at least 5 spikes in the defined window and decoded angle reaches at least 20 degrees before trial end), log OUTCOME_NO_RESPONSE. Subthreshold spikes or angles may still occur. A no-response outcome is valid and is not replaced by an animation.
 
+---
+
+## 5. Intervention Definition and Equivalence Rules
+
+* **Primary Silencing Mechanism (Shiu-Equivalent):** In silico silencing of candidate intermediate neurons (`Fdg` / SEZ premotor pool) will be implemented by **setting all outgoing synaptic weights to zero** ($W_{ij} = 0$). This matches the exact mathematical behavior of `model.py` in the reference repository.
+* **Alternative Modeled Mechanism (Voltage Clamping):** Clamping membrane voltage to hyperpolarized potential ($V_{\text{clamp}} = -70.0\text{ mV}$).
+* **Documentation Rule:** NeuroFly will explicitly record whether synaptic disconnection or voltage clamping was used in each evaluation run, avoiding claims of equivalence with Shiu et al. unless synaptic zeroing is employed.

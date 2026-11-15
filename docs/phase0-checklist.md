@@ -32,11 +32,13 @@ For the detailed account of what was built and how it maps to the execution guid
 
 ## Phase 0 completion gate
 
+The confirmation record below satisfies this gate. Phase 1 was later approved with a scope limitation and Phase 2 approved on 2026-11-14; the bullets below describe the restrictions that applied before owner confirmation.
+
 The project has a charter, scope boundary, evidence vocabulary, architecture proposal, assay/data handoff, asset status, decision log, risk register, and repository layout. The exact dataset/cell mapping and asset remain unresolved with explicit stop conditions. These scientific and asset items can remain pending only within those boundaries.
 
-Phase 0 is complete only after the project owner explicitly records approval. Until then:
+Phase 0 is complete only after the project owner explicitly records approval. Before that owner confirmation:
 
-- Phase 1 is on hold.
+- Phase 1 was on hold.
 - No bulk connectome download, extraction, named neuron claim, or selected cell intervention begins.
 - No unverified or uncleared fly asset enters a public build.
 

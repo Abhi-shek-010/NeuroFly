@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "schema_version": "1.0.0",
+  "document_title": "NeuroFly Habitat Scene Spatial Configuration",
+  "phase": "2",
+  "stage": "2B",
+  "last_updated": "2026-11-14",
+  "epistemic_classification": {
+    "units_and_axes": "Confirmed",
+    "ground_plane": "Confirmed",
+    "arena_radius": "Provisional",
+    "stimulus_patch_geometry": "Provisional",
+    "fly_root_stance": "Provisional",
+    "proboscis_kinematics": "Provisional",
+    "contact_proxy_geometry": "Provisional",
+    "neural_connectivity": "Unresolved (Deferred to Phase 3)"
+  },
+  "coordinate_convention": {
+    "system": "Right-Handed Cartesian",
+    "up_axis": "+Y",
+    "up_anatomical": "Dorsal",
+    "forward_axis": "+Z",
+    "forward_anatomical": "Anterior",
+    "transverse_axis": "+X",
+    "transverse_anatomical": "Lateral Right",
+    "world_origin": [0.0, 0.0, 0.0],
+    "origin_description": "Geometric center of the circular arena floor on the substrate surface plane (Y = 0.0)"
+  },
+  "scale_and_units": {
+    "base_unit": "millimeter",
+    "unit_symbol": "mm",
+    "threejs_scale_factor": 1.0,
+    "conversion_policy": "1.0 Three.js World Unit (WU) = 1.0 millimeter (mm)",
+    "meters_per_world_unit": 0.001,
+    "micrometers_per_world_unit": 1000.0,
+    "camera_near_clip_mm": 0.1,
+    "camera_far_clip_mm": 100.0
+  },
+  "arena": {
+    "entity_id": "Arena_Floor",
+    "shape": "circle",
+    "center_mm": [0.0, 0.0, 0.0],
+    "radius_mm": 15.0,
+    "diameter_mm": 30.0,
+    "floor_plane_y_mm": 0.0,
+    "perimeter_rail": {
+      "entity_id": "Arena_Perimeter_Rail",
+      "radius_mm": 15.0,
+      "height_mm": 1.0,
+      "thickness_mm": 0.2
+    },
+    "status": "Provisional"
+  },
+  "stimulus_patch": {
+    "entity_id": "Stimulus_Patch_Root",
+    "shape": "cylinder_disc",
+    "center_mm": [0.0, 0.0, 2.0],
+    "radius_mm": 1.0,
+    "visual_thickness_mm": 0.05,
+    "interaction_cylinder_height_mm": 0.1,
+    "placement_range_z_mm": [1.5, 4.0],
+    "no_contact_threshold_distance_mm": 2.0,
+    "status": "Provisional",
+    "condition": "sucrose_100mM",
+    "nominal_concentration_mM": 100.0
+  },
+  "fly_spatial_configuration": {
+    "root_entity_id": "Fly_Root",
+    "resting_position_mm": [0.0, 0.75, 0.0],
+    "resting_euler_deg": [0.0, 0.0, 0.0],
+    "facing_direction": "+Z",
+    "status": "Provisional",
+    "provisional_body_dimensions_mm": {
+      "total_length": 2.5,
+      "stance_width_tarsi": 2.4,
+      "stance_height_dorsal": 1.5
+    },
+    "body_hierarchy": {
+      "thorax_center_local_mm": [0.0, 0.0, 0.0],
+      "head_center_local_mm": [0.0, -0.1, 0.6],
+      "head_center_world_mm": [0.0, 0.65, 0.6],
+      "proboscis_pivot": {
+        "entity_id": "Proboscis_Pivot",
+        "parent": "Head",
+        "local_position_mm": [0.0, -0.3, 0.7],
+        "world_resting_position_mm": [0.0, 0.45, 0.7],
+        "rotation_axis": "local_X",
+        "angle_min_deg": 0.0,
+        "angle_max_deg": 45.0,
+        "resting_angle_deg": 0.0,
+        "status": "Provisional"
+      },
+      "contact_proxy": {
+        "entity_id": "Contact_Proxy_Labellum",
+        "parent": "Proboscis_Pivot",
+        "shape": "sphere",
+        "radius_mm": 0.15,
+        "local_offset_from_pivot_resting_mm": [0.0, -0.1, -0.15],
+        "resting_world_center_mm": [0.0, 0.35, 0.55],
+        "max_extended_world_center_mm": [0.0, 0.05, 1.15],
+        "status": "Provisional"
+      }
+    }
+  },
+  "developer_scale_aids": {
+    "axis_gizmo": {
+      "length_mm": 1.0,
+      "x_color": "#ff0000",
+      "y_color": "#00ff00",
+      "z_color": "#0000ff"
+    },
+    "metric_grid": {
+      "major_grid_spacing_mm": 1.0,
+      "minor_grid_spacing_mm": 0.2,
+      "grid_extent_radius_mm": 15.0
+    },
+    "default_visibility": false
+  },
+  "cameras": {
+    "overview": {
+      "name": "Overview Orbit",
+      "position_mm": [0.0, 12.0, 18.0],
+      "target_mm": [0.0, 0.5, 0.75],
+      "fov_deg": 45.0
+    },
+    "top_down": {
+      "name": "Top-Down (Dorsal)",
+      "position_mm": [0.0, 25.0, 1.0],
+      "target_mm": [0.0, 0.0, 1.0],
+      "fov_deg": 30.0
+    },
+    "lateral_profile": {
+      "name": "Lateral Profile (Sagittal)",
+      "position_mm": [20.0, 0.5, 1.0],
+      "target_mm": [0.0, 0.5, 1.0],
+      "fov_deg": 30.0
+    },
+    "macro_contact": {
+      "name": "Macro Contact Close-Up",
+      "position_mm": [1.5, 0.8, 2.6],
+      "target_mm": [0.0, 0.1, 1.15],
+      "fov_deg": 25.0
+    }
+  }
+}

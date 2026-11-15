@@ -2,8 +2,8 @@
 
 **Build record date:** 2026-11-01  
 **Repository:** `C:\Users\abhi0\Desktop\NeuroFly\NeuroFly`  
-**Phase status:** Foundation prepared for project-owner review; Phase 0 is not confirmed.  
-**Phase 1 status:** On hold pending explicit Phase 0 confirmation.
+**Phase status at build-record creation (2026-11-01):** Foundation prepared for owner review; confirmation was recorded later the same day in phase0-checklist.md.
+**Phase 1 status at build-record creation:** On hold before the Phase 0 confirmation. This historical status was superseded by the Phase 1 owner decision dated 2026-11-14 in phase1-open-decisions.md.
 
 ## 1. Purpose of this record
 
@@ -11,7 +11,7 @@ This document maps the Phase 0 work completed in the repository to the detailed 
 
 Phase 0 is project setup and scope control. It does not implement the connectome pipeline, neural dynamics, fly asset, simulation service, or interactive Habitat. The folder layout is scaffolding. A file or folder being present is not evidence that its later-phase system works.
 
-## 2. Current status at a glance
+## 2. Status snapshot at build-record creation
 
 | Area | State | What that means |
 |---|---|---|
@@ -319,4 +319,4 @@ Before confirming Phase 0, the owner should:
 6. Record a named owner and calendar review date for each remaining decision.
 7. Complete the confirmation record in [`phase0-checklist.md`](phase0-checklist.md).
 
-Phase 1 remains on hold until the owner records **Phase 0 confirmed** and explicitly approves the handoff. After that gate, Phase 1 begins with the assay methods and source-backed circuit/ID review; it does not begin with bulk data extraction.
+At the time of this walkthrough, Phase 1 was on hold pending the Phase 0 gate. Phase 0 was confirmed on 2026-11-01, and Phase 1 was later owner-approved with a scope limitation on 2026-11-14; see docs/phase1/phase1-open-decisions.md. Bulk connectome extraction remains assigned to Phase 3.
